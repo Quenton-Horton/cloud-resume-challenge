@@ -52,7 +52,7 @@ resource "aws_iam_role_policy" "github_deploy" {
 
 data "aws_iam_policy_document" "github_terraform" {
   statement {
-    sid    = "TerraformStateAndResources"
+    sid    = "CoreServices"
     effect = "Allow"
     actions = [
       "s3:*",
@@ -60,19 +60,36 @@ data "aws_iam_policy_document" "github_terraform" {
       "dynamodb:*",
       "lambda:*",
       "apigateway:*",
+      "acm:*",
+      "route53:*"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "IAMManagement"
+    effect = "Allow"
+    actions = [
       "iam:GetRole",
       "iam:PassRole",
-      "iam:ListRolePolicies",
+      "iam:CreateRole",
+      "iam:DeleteRole",
+      "iam:UpdateRole",
       "iam:GetRolePolicy",
+      "iam:PutRolePolicy",
+      "iam:DeleteRolePolicy",
+      "iam:ListRolePolicies",
       "iam:ListAttachedRolePolicies",
-      "acm:DescribeCertificate",
-      "acm:ListCertificates",
-      "acm:ListTagsForCertificate",
-      "route53:GetChange",
-      "route53:GetHostedZone",
-      "route53:ListHostedZonesByName",
-      "route53:ListResourceRecordSets",
-      "route53:ChangeResourceRecordSets"
+      "iam:AttachRolePolicy",
+      "iam:DetachRolePolicy",
+      "iam:TagRole",
+      "iam:UntagRole",
+      "iam:ListInstanceProfilesForRole",
+      "iam:GetOpenIDConnectProvider",
+      "iam:CreateOpenIDConnectProvider",
+      "iam:DeleteOpenIDConnectProvider",
+      "iam:UpdateOpenIDConnectProviderThumbprint",
+      "iam:TagOpenIDConnectProvider"
     ]
     resources = ["*"]
   }
