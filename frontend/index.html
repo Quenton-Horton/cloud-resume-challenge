@@ -1,51 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quenton Horton</title>
-  <style>
-    body {
-      font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      max-width: 720px;
-      margin: 60px auto;
-      padding: 0 24px;
-      color: #222;
-      line-height: 1.5;
-    }
-    h1 { font-size: 2.4rem; margin-bottom: 0.2rem; }
-    .tag { color: #555; font-size: 1.1rem; margin-top: 0; }
-    .count { color: #1F3864; font-weight: 600; }
-    .links { margin-top: 24px; }
-    .links a { color: #1F3864; text-decoration: none; margin-right: 20px; font-weight: 600; }
-    .links a:hover { text-decoration: underline; }
-    footer { margin-top: 40px; color: #888; font-size: 0.9rem; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quenton Horton — Cloud Engineer</title>
+<style>
+:root{--ink:#1A1B2E;--peri:#6C7BDF;--peri-light:#A5B0F0;--bg:#F7F7FB;--slate:#2D2E45;--green:#3FB950;--muted:#5A5D7A;--card:#FFFFFF;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--slate);line-height:1.6;}
+.mono,code{font-family:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+.hero{background:var(--ink);color:#E6E9F5;padding:72px 24px 64px;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 12% -10%,rgba(108,123,223,0.28),transparent 70%),radial-gradient(500px 260px at 100% 120%,rgba(165,176,240,0.16),transparent 70%);pointer-events:none;}
+.hero-inner{max-width:780px;margin:0 auto;position:relative;}
+.term{font-family:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:0.9rem;color:var(--peri-light);background:rgba(255,255,255,0.04);border:1px solid rgba(165,176,240,0.18);border-radius:10px;padding:16px 18px;margin-bottom:32px;max-width:420px;}
+.term .prompt{color:var(--green);}
+.term .cmd{color:#E6E9F5;}
+.term .out{color:var(--muted);}
+.term .count{color:var(--green);font-weight:600;}
+.term-line{display:block;white-space:nowrap;}
+h1{font-family:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:clamp(2.1rem,6vw,3.2rem);font-weight:700;letter-spacing:-0.02em;line-height:1.1;margin-bottom:12px;}
+h1 .accent{color:var(--peri-light);}
+.role{font-family:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:1rem;color:var(--peri-light);margin-bottom:8px;}
+.subrole{color:#B9BED8;font-size:0.98rem;margin-bottom:28px;}
+.subrole strong{color:var(--green);font-weight:600;}
+.actions{display:flex;flex-wrap:wrap;gap:12px;}
+.btn{display:inline-block;font-family:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:0.9rem;text-decoration:none;padding:11px 20px;border-radius:8px;transition:transform 0.12s ease,background 0.12s ease,border-color 0.12s ease;}
+.btn-primary{background:var(--peri);color:#fff;}
+.btn-primary:hover{background:var(--peri-light);transform:translateY(-1px);}
+.btn-ghost{border:1px solid rgba(165,176,240,0.35);color:var(--peri-light);}
+.btn-ghost:hover{border-color:var(--peri-light);transform:translateY(-1px);}
+main{max-width:780px;margin:0 auto;padding:56px 24px 80px;}
+section{margin-bottom:44px;}
+.eyebrow{font-family:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--peri);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(108,123,223,0.35),transparent);}
+.summary{font-size:1.05rem;color:var(--slate);}
+.skills{display:grid;gap:14px;}
+.skill-row{display:grid;grid-template-columns:190px 1fr;gap:16px;align-items:start;}
+.skill-key{font-family:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:0.82rem;color:var(--peri);padding-top:2px;}
+.skill-val{color:var(--muted);font-size:0.95rem;}
+@media(max-width:560px){.skill-row{grid-template-columns:1fr;gap:4px;}}
+.project{background:var(--card);border:1px solid #E7E8F2;border-left:3px solid var(--peri);border-radius:10px;padding:22px 24px;margin-bottom:18px;transition:box-shadow 0.15s ease,transform 0.15s ease;}
+.project:hover{box-shadow:0 8px 30px rgba(108,123,223,0.14);transform:translateY(-2px);}
+.project h3{font-family:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:1.05rem;color:var(--ink);margin-bottom:4px;}
+.project .meta{font-size:0.82rem;color:var(--peri);margin-bottom:12px;font-family:"JetBrains Mono",monospace;}
+.project ul{list-style:none;}
+.project li{position:relative;padding-left:20px;margin-bottom:8px;font-size:0.94rem;color:var(--slate);}
+.project li::before{content:"▹";position:absolute;left:0;color:var(--peri);}
+.project a.repo{display:inline-block;margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:0.82rem;color:var(--peri);text-decoration:none;}
+.project a.repo:hover{color:var(--peri-light);text-decoration:underline;}
+.xp-item{margin-bottom:26px;}
+.xp-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;margin-bottom:2px;}
+.xp-org{font-weight:700;color:var(--ink);}
+.xp-date{font-family:"JetBrains Mono",monospace;font-size:0.82rem;color:var(--muted);}
+.xp-title{font-style:italic;color:var(--peri);font-size:0.94rem;margin-bottom:8px;}
+.xp-item ul{list-style:none;}
+.xp-item li{position:relative;padding-left:18px;margin-bottom:6px;font-size:0.93rem;}
+.xp-item li::before{content:"·";position:absolute;left:4px;color:var(--peri);font-weight:700;}
+footer{background:var(--ink);color:var(--muted);text-align:center;padding:28px 24px;font-family:"JetBrains Mono",monospace;font-size:0.82rem;}
+footer a{color:var(--peri-light);text-decoration:none;}
+footer a:hover{text-decoration:underline;}
+@media(prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important;}}
+a:focus-visible,.btn:focus-visible{outline:2px solid var(--peri-light);outline-offset:3px;}
+</style>
 </head>
 <body>
-  <h1>Quenton Horton</h1>
-  <p class="tag">Cloud / infrastructure engineer. AWS, Terraform, Linux.</p>
-
-  <div class="links">
-    <a href="resume.pdf">Resume</a>
-    <a href="https://github.com/Quenton-Horton">GitHub</a>
-  </div>
-
-  <p>Visitors: <span id="count" class="count">...</span></p>
-
-  <footer>
-    <a href="https://github.com/Quenton-Horton">github.com/Quenton-Horton</a>
-  </footer>
-
-  <script>
-    fetch("https://jb7ozf27bd.execute-api.us-east-1.amazonaws.com/count")
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        document.getElementById("count").textContent = data.count;
-      })
-      .catch(function () {
-        document.getElementById("count").textContent = "unavailable";
-      });
-  </script>
+<header class="hero">
+<div class="hero-inner">
+<div class="term" aria-hidden="true">
+<span class="term-line"><span class="prompt">quenton@cloud</span>:<span style="color:#A5B0F0">~</span>$ <span class="cmd">whoami</span></span>
+<span class="term-line out">cloud / infrastructure engineer</span>
+<span class="term-line"><span class="prompt">quenton@cloud</span>:<span style="color:#A5B0F0">~</span>$ <span class="cmd">curl /count</span></span>
+<span class="term-line out">visitors: <span class="count" id="count">…</span></span>
+</div>
+<h1>Quenton <span class="accent">Horton</span></h1>
+<div class="role">Cloud Support Engineer · AWS · Terraform · Linux</div>
+<div class="subrole"><strong>Active Public Trust</strong> · Washington, D.C.</div>
+<div class="actions">
+<a class="btn btn-primary" href="resume.pdf">Download résumé (PDF)</a>
+<a class="btn btn-ghost" href="https://github.com/Quenton-Horton">GitHub</a>
+<a class="btn btn-ghost" href="mailto:Qhorton33@gmail.com">Email</a>
+</div>
+</div>
+</header>
+<main>
+<section>
+<div class="eyebrow">summary</div>
+<p class="summary">Operations support professional with 2+ years monitoring mission-critical satellite data infrastructure at NOAA — triaging threshold exceptions, isolating faults, and coordinating incident response across five ground-system programs. Builds and operates AWS infrastructure as code with Terraform, automates deployments with CI/CD pipelines, and diagnoses production failures across networking, IAM, DNS, and system layers. Pursuing the AWS Solutions Architect Associate certification.</p>
+</section>
+<section>
+<div class="eyebrow">skills</div>
+<div class="skills">
+<div class="skill-row"><div class="skill-key">cloud / iac</div><div class="skill-val">AWS — S3, CloudFront, Lambda, DynamoDB, API Gateway, IAM, VPC, ALB, CloudWatch, Route 53, ACM; Terraform (remote state, drift detection); IAM Identity Center (SSO)</div></div>
+<div class="skill-row"><div class="skill-key">ci/cd</div><div class="skill-val">GitHub Actions; OIDC role-based auth (no long-lived keys); remote S3 state with native locking; automated plan / apply and deploy pipelines</div></div>
+<div class="skill-row"><div class="skill-key">networking</div><div class="skill-val">TCP/IP, DNS, subnetting / CIDR, routing, load balancing, security groups vs. NACLs</div></div>
+<div class="skill-row"><div class="skill-key">observability</div><div class="skill-val">CloudWatch, Kibana / ELK, Nagios, SolarWinds; JIRA incident workflows</div></div>
+<div class="skill-row"><div class="skill-key">scripting</div><div class="skill-val">Bash (production), Python (debugging), Git / GitHub</div></div>
+</div>
+</section>
+<section>
+<div class="eyebrow">projects</div>
+<div class="project">
+<h3>AWS Break/Fix Lab</h3>
+<div class="meta">infrastructure as code · incident response · terraform</div>
+<ul>
+<li>Multi-tier AWS VPC in Terraform: public/private subnets across two AZs, ALB, NAT, three layered security groups, scoped IAM, DynamoDB with a Gateway VPC endpoint, CloudWatch + SNS alerting.</li>
+<li>Authenticated via IAM Identity Center (SSO) with no long-lived keys; root protected with MFA — least privilege from the ground up.</li>
+<li>Diagnosed and documented eight production-style incidents — connectivity, IAM, load-balancer health, routing, DNS, disk, CPU, and security-group drift — each with a full root-cause write-up.</li>
+</ul>
+<a class="repo" href="https://github.com/Quenton-Horton/aws-breakfix-lab">→ github.com/Quenton-Horton/aws-breakfix-lab</a>
+</div>
+<div class="project">
+<h3>Cloud Resume Challenge</h3>
+<div class="meta">serverless · ci/cd · this site</div>
+<ul>
+<li>Serverless site on private S3 + CloudFront (OAC) over HTTPS with a custom domain via Route 53 and ACM.</li>
+<li>Visitor counter: Python Lambda → DynamoDB → HTTP API Gateway (the count in the header above is live).</li>
+<li>CI/CD with GitHub Actions and OIDC — frontend auto-deploys to S3 and invalidates CloudFront; Terraform runs plan on PR, apply on merge, against remote S3 state with native locking.</li>
+</ul>
+<a class="repo" href="https://github.com/Quenton-Horton/cloud-resume-challenge">→ github.com/Quenton-Horton/cloud-resume-challenge</a>
+</div>
+</section>
+<section>
+<div class="eyebrow">experience</div>
+<div class="xp-item">
+<div class="xp-head"><span class="xp-org">FedGeek / ERT — NOAA Affiliate</span><span class="xp-date">Mar 2024 – Present</span></div>
+<div class="xp-title">Operations Support Specialist — ESPC Help Desk</div>
+<ul>
+<li>Monitor satellite data ingestion across five ground-system programs (GOES, JPSS, EUMETSAT, DMSP, JMA) within NCCF; flag threshold exceptions for escalation.</li>
+<li>Triage and escalate data anomalies to Tier 2 via JIRA within SLA windows; maintain real-time awareness on Nagios, SolarWinds, and Kibana.</li>
+<li>Coordinated multi-team incident response during the Asheville outage, rerouting ingestion to Wallops Island across network, PDA, and product-delivery engineers.</li>
+<li>Selected 1 of 4 from a 24-person team for L3Harris GeoCloud training; promoted to shift lead; 2025 Peer Award.</li>
+</ul>
+</div>
+<div class="xp-item">
+<div class="xp-head"><span class="xp-org">Mayor's Office of Community Relations & Services</span><span class="xp-date">2018 – 2019</span></div>
+<div class="xp-title">Specialist</div>
+<ul>
+<li>Tracked resident cases across District agencies in Salesforce; coordinated 24-hour emergency response and weekly reporting.</li>
+</ul>
+</div>
+<div class="xp-item">
+<div class="xp-head"><span class="xp-org">United States Holocaust Memorial Museum</span><span class="xp-date">2006 – 2018</span></div>
+<div class="xp-title">Project Advisor / Student Ambassador</div>
+<ul>
+<li>Advised program leadership; led tours for VIPs, law enforcement, and international visitors; trained guides and curated the Main Exhibition visitor experience.</li>
+</ul>
+</div>
+</section>
+<section>
+<div class="eyebrow">certifications &amp; education</div>
+<div class="skills">
+<div class="skill-row"><div class="skill-key">certs</div><div class="skill-val">CompTIA A+ · CompTIA Security+ · IBM Cybersecurity Analyst (Coursera) · AWS Solutions Architect Associate (in progress)</div></div>
+<div class="skill-row"><div class="skill-key">education</div><div class="skill-val">B.A. English — University of the District of Columbia</div></div>
+</div>
+</section>
+</main>
+<footer>
+<span>quenton@cloud</span> · <a href="https://github.com/Quenton-Horton">github.com/Quenton-Horton</a> · <a href="mailto:Qhorton33@gmail.com">Qhorton33@gmail.com</a>
+</footer>
+<script>
+fetch("https://jb7ozf27bd.execute-api.us-east-1.amazonaws.com/count")
+.then(function(r){return r.json();})
+.then(function(data){document.getElementById("count").textContent=data.count;})
+.catch(function(){document.getElementById("count").textContent="offline";});
+</script>
 </body>
 </html>
