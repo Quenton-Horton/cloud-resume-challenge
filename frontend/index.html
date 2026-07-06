@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quenton Horton</title>
+  <style>
+    body {
+      font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      max-width: 720px;
+      margin: 60px auto;
+      padding: 0 24px;
+      color: #222;
+      line-height: 1.5;
+    }
+    h1 { font-size: 2.4rem; margin-bottom: 0.2rem; }
+    .tag { color: #555; font-size: 1.1rem; margin-top: 0; }
+    .count { color: #1F3864; font-weight: 600; }
+    footer { margin-top: 40px; color: #888; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>Quenton Horton</h1>
+  <p class="tag">Cloud / infrastructure engineer. AWS, Terraform, Linux.</p>
+  <p>Visitors: <span id="count" class="count">...</span></p>
+
+  <footer>
+    <a href="https://github.com/Quenton-Horton">github.com/Quenton-Horton</a>
+  </footer>
+
+  <script>
+    fetch("https://jb7ozf27bd.execute-api.us-east-1.amazonaws.com/count")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        document.getElementById("count").textContent = data.count;
+      })
+      .catch(function () {
+        document.getElementById("count").textContent = "unavailable";
+      });
+  </script>
+</body>
+</html>
