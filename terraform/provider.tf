@@ -11,11 +11,11 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "quentonhorton-crc-tfstate"
-    key            = "cloud-resume/terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "cloud-resume-tflock"
-    encrypt        = true
+    bucket       = "quentonhorton-crc-tfstate"
+    key          = "cloud-resume/terraform.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
   }
 }
 
