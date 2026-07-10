@@ -2,34 +2,41 @@ name: Terraform
 
 on:
   pull_request:
+    branches: [main]
     paths:
       - 'terraform/**'
   push:
     branches: [main]
     paths:
       - 'terraform/**'
-
-permissions:
-  id-token: write
-  contents: read
+  workflow_dispatch: # 🔓 UNLOCKS manual triggering button in the GitHub Actions UI
 
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    
+    # 🔒 SECURE TOKEN PERMISSIONS (Required for Keyless OIDC Handshake)
+    permissions:
+      id-token: write
+      contents: read
+
     defaults:
       run:
         working-directory: terraform
+
     steps:
-      - name: Checkout
+      - name: Checkout Source Code
         uses: actions/checkout@v4
 
+      # 🤝 SECURE KEYLESS OIDC INITIALIZATION (No hardcoded account ID)
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::287773673131:role/cloud-resume-github-actions
+          # Pulls securely from your repository variable configuration
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
-      - name: Setup Terraform
+      - name: Setup Terraform Compiler
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
@@ -42,5 +49,6 @@ jobs:
         run: terraform plan -no-color
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        # Prevents accidental applies on loose pull requests; enforces main branch execution matching your OIDC trust rules
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         run: terraform apply -auto-approve
