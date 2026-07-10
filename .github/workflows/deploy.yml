@@ -3,29 +3,32 @@ name: Deploy Frontend
 on:
   push:
     branches: [main]
-    paths:
-      - 'frontend/**'
-      - '.github/workflows/deploy.yml'
-
-permissions:
-  id-token: write
-  contents: read
+  workflow_dispatch: # 🔓 UNLOCKS manual triggering button in the GitHub Actions UI
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
+    # 🔒 SECURE TOKEN PERMISSIONS (Required for Keyless OIDC Handshake)
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
-      - name: Checkout
+      - name: Checkout Source Code
         uses: actions/checkout@v4
 
+      # 🤝 SECURE KEYLESS OIDC INITIALIZATION (No hardcoded account ID)
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::287773673131:role/cloud-resume-github-actions
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
+      # 📁 AUTOMATED OBJECT SYNCHRONIZATION
       - name: Sync frontend to S3
         run: aws s3 sync frontend/ s3://quentonhorton-resume-site-tf/ --delete
 
-      - name: Invalidate CloudFront
-        run: aws cloudfront create-invalidation --distribution-id E3GWKD2B2HPXTI --paths "/*"
+      # 🚀 SECURE CACHE INVALIDATION (Masked via dynamic variables)
+      - name: Invalidate CloudFront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DIST_ID }} --paths "/*"
