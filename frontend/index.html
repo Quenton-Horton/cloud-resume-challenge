@@ -74,7 +74,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--peri-light);outline-o
 <span class="term-line out">visitors: <span class="count" id="count">…</span></span>
 </div>
 <h1>Quenton <span class="accent">Horton</span></h1>
-<div class="role">Cloud Support Engineer · AWS · Terraform · Linux</div>
+<div class="role">DevOps / Cloud Engineer · AWS · Kubernetes · Terraform · CI/CD</div>
 <div class="subrole"><strong>Active Public Trust</strong> · Washington, D.C.</div>
 <div class="actions">
 <a class="btn btn-primary" href="resume.pdf">Download résumé (PDF)</a>
@@ -86,7 +86,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--peri-light);outline-o
 <main>
 <section>
 <div class="eyebrow">summary</div>
-<p class="summary">Operations support professional with 2+ years monitoring mission-critical satellite data infrastructure at NOAA — triaging threshold exceptions, isolating faults, and coordinating incident response across five ground-system programs. Builds and operates AWS infrastructure as code with Terraform, automates deployments with CI/CD pipelines, and diagnoses production failures across networking, IAM, DNS, and system layers. Pursuing the AWS Solutions Architect Associate certification.</p>
+<p class="summary">Cloud infrastructure engineer who builds and operates AWS environments as code. Provisions multi-tier VPCs, EKS clusters, and containerized services with Terraform; automates delivery through GitHub Actions pipelines authenticated with OIDC; and instruments systems with CloudWatch and Prometheus/Grafana. Diagnoses production failures across networking, IAM, DNS, Kubernetes, and system layers — documented in eight incident write-ups and a seven-signature Kubernetes troubleshooting runbook. Two years operating mission-critical satellite ground systems at NOAA as a shift lead.</p>
 </section>
 <section>
 <div class="eyebrow">skills</div>
@@ -94,12 +94,50 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--peri-light);outline-o
 <div class="skill-row"><div class="skill-key">cloud / iac</div><div class="skill-val">AWS — S3, CloudFront, Lambda, DynamoDB, API Gateway, IAM, VPC, ALB, CloudWatch, Route 53, ACM; Terraform (remote state, drift detection); IAM Identity Center (SSO)</div></div>
 <div class="skill-row"><div class="skill-key">ci/cd</div><div class="skill-val">GitHub Actions; OIDC role-based auth (no long-lived keys); remote S3 state with native locking; automated plan / apply and deploy pipelines</div></div>
 <div class="skill-row"><div class="skill-key">networking</div><div class="skill-val">TCP/IP, DNS, subnetting / CIDR, routing, load balancing, security groups vs. NACLs</div></div>
-<div class="skill-row"><div class="skill-key">observability</div><div class="skill-val">CloudWatch, Kibana / ELK, Nagios, SolarWinds; JIRA incident workflows</div></div>
-<div class="skill-row"><div class="skill-key">scripting</div><div class="skill-val">Bash (production), Python (debugging), Git / GitHub</div></div>
+<div class="skill-row"><div class="skill-key">observability</div><div class="skill-val">CloudWatch (metric alarms, dashboards, custom metrics via SSM agent, EventBridge drift detection, Synthetics canaries); Prometheus / Grafana / PromQL; Kibana / ELK; Nagios; SolarWinds; JIRA incident workflows</div></div>
+<div class="skill-row"><div class="skill-key">containers / k8s</div><div class="skill-val">Docker; ECS Fargate; Kubernetes (EKS) — Deployments, Services, Ingress, ConfigMaps, Secrets, HPA; Helm; IRSA (keyless pod-to-AWS auth via OIDC); kubectl troubleshooting</div></div>
+<div class="skill-row"><div class="skill-key">scripting</div><div class="skill-val">Python + boto3 — production diagnostic tooling (argparse, structured logging, pagination, JSON output for pipelines); Bash; Git / GitHub</div></div>
 </div>
 </section>
 <section>
 <div class="eyebrow">projects</div>
+<div class="project">
+<h3>EKS Lab — Kubernetes on AWS</h3>
+<div class="meta">kubernetes · terraform · helm · irsa</div>
+<ul>
+<li>EKS cluster provisioned entirely in Terraform: VPC across two AZs, managed node group, OIDC provider, and the subnet tagging the AWS Load Balancer Controller requires.</li>
+<li>App exposed through an ALB Ingress — Load Balancer Controller installed with Helm and wired to an IAM role via IRSA, assuming AWS permissions through OIDC with no stored credentials; ALB registers pod IPs directly across both AZs.</li>
+<li>ConfigMaps, Secrets, and a HorizontalPodAutoscaler (min 2 / max 5, 50% CPU) backed by metrics-server.</li>
+<li>Paired with a Kubernetes troubleshooting runbook covering seven failure signatures, each reproduced and diagnosed on a live cluster.</li>
+</ul>
+<a class="repo" href="https://github.com/Quenton-Horton/eks-lab">→ github.com/Quenton-Horton/eks-lab</a>
+</div>
+<div class="project">
+<h3>AWS Diagnostic Toolkit</h3>
+<div class="meta">python · boto3 · production tooling</div>
+<ul>
+<li>Four read-only diagnostic tools: a per-tier security-group drift checker, a VPC route path tracer that reports the first broken link, an IAM access diagnoser using the policy simulator, and a cost auditor that quantifies waste in dollars.</li>
+<li>Built to production standard — idempotent, structured logging, ClientError handling, argparse parameterization, paginated scans, and JSON output with exit codes so the tools compose into pipelines.</li>
+</ul>
+<a class="repo" href="https://github.com/Quenton-Horton/aws-diagnostic-toolkit">→ github.com/Quenton-Horton/aws-diagnostic-toolkit</a>
+</div>
+<div class="project">
+<h3>Observability Lab — Prometheus &amp; Grafana</h3>
+<div class="meta">prometheus · grafana · promql</div>
+<ul>
+<li>kube-prometheus-stack on Kubernetes — Prometheus, Grafana, Alertmanager, node-exporter, kube-state-metrics.</li>
+<li>Verified scrape-target health through the Prometheus API and queried live cluster metrics with PromQL rather than relying on prebuilt panels.</li>
+</ul>
+<a class="repo" href="https://github.com/Quenton-Horton/observability-lab">→ github.com/Quenton-Horton/observability-lab</a>
+</div>
+<div class="project">
+<h3>ECS Fargate Lab</h3>
+<div class="meta">containers · ci/cd · alb</div>
+<ul>
+<li>Load-balanced Fargate service across two AZs in private subnets, ALB routing to task IPs directly.</li>
+<li>Pipeline builds the image, pushes to ECR, and deploys — authenticated via OIDC.</li>
+</ul>
+</div>
 <div class="project">
 <h3>AWS Break/Fix Lab</h3>
 <div class="meta">infrastructure as code · incident response · terraform</div>
@@ -151,7 +189,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--peri-light);outline-o
 <section>
 <div class="eyebrow">certifications &amp; education</div>
 <div class="skills">
-<div class="skill-row"><div class="skill-key">certs</div><div class="skill-val">CompTIA A+ · CompTIA Security+ · IBM Cybersecurity Analyst (Coursera) · AWS Solutions Architect Associate (in progress)</div></div>
+<div class="skill-row"><div class="skill-key">certs</div><div class="skill-val">CompTIA A+ · CompTIA Security+ (2023–2026) · IBM Cybersecurity Analyst (Coursera)</div></div>
 <div class="skill-row"><div class="skill-key">education</div><div class="skill-val">B.A. English — University of the District of Columbia</div></div>
 </div>
 </section>
